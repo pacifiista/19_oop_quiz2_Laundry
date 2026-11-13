@@ -20,7 +20,14 @@ public class OrderCalculator {
      * @return jumlah semua harga, atau 0 bila daftar kosong
      */
     public static double totalPrice(List<LaundryOrder> orders) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (orders == null || orders.isEmpty()) {
+            return 0.0;
+        }
+        double total = 0.0;
+        for (LaundryOrder order : orders) {
+            total += order.calculatePrice();
+        }
+        return total;
     }
 
     /**
@@ -32,7 +39,16 @@ public class OrderCalculator {
      * @return jumlah biaya antar-jemput, atau 0 bila tidak ada yang punya
      */
     public static double totalDelivery(List<LaundryOrder> orders) {
-        throw new UnsupportedOperationException("Not implemented yet");
+       if (orders == null || orders.isEmpty()) {
+            return 0.0;
+        }
+        double total = 0.0;
+        for (LaundryOrder order : orders) {
+            if (order instanceof Deliverable) {
+                total += ((Deliverable) order).deliveryFee();
+            }
+        }
+        return total;
     }
 
     /**
@@ -44,7 +60,10 @@ public class OrderCalculator {
      * @throws InvalidWeightException bila berat tidak valid
      */
     public static void validate(LaundryOrder order) throws InvalidWeightException {
-        throw new UnsupportedOperationException("Not implemented yet");
+        if (order == null || order.getWeightKg() <= 0 || order.getWeightKg() > 20) {
+            double weight = (order != null) ? order.getWeightKg() : 0.0;
+            throw new InvalidWeightException("Invalid weight: " + weight);
+        }
     }
 
     /**
@@ -54,6 +73,13 @@ public class OrderCalculator {
      * @return true bila valid, false bila validate melempar InvalidWeightException
      */
     public static boolean isAcceptable(LaundryOrder order) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        try {
+            validate(order);
+            return true;
+        } catch (InvalidWeightException e) {
+            return false;
+        }
     }
 }
+
+
