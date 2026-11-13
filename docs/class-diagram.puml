@@ -1,0 +1,98 @@
+@startuml class-diagram
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam class {
+  BorderColor Black
+  ArrowColor Black
+  BackgroundColor White
+  BackgroundColor<<given>> #E5E7EB
+  BackgroundColor<<complete the methods>> #FEF9C3
+  BackgroundColor<<create this class>> #DCFCE7
+}
+skinparam interface {
+  BorderColor Black
+  BackgroundColor<<given>> #E5E7EB
+}
+hide empty members
+
+legend left
+  | Abu-abu | sudah lengkap, jangan diubah |
+  | Kuning | lengkapi isi method-nya |
+  | Hijau | kelas baru, buat sendiri |
+endlegend
+
+class Customer <<complete the methods>> {
+  - customerId : String
+  - name : String
+  + Customer(customerId : String, name : String)
+  + getCustomerId() : String
+  + getName() : String
+  + setName(name : String) : void
+}
+
+abstract class LaundryOrder <<given>> {
+  - orderId : String
+  - customer : Customer
+  - weightKg : double
+  + LaundryOrder(orderId : String, customer : Customer, weightKg : double)
+  + getOrderId() : String
+  + getCustomer() : Customer
+  + getWeightKg() : double
+  + calculatePrice() : double {abstract}
+}
+
+interface Deliverable <<given>> {
+  + deliveryFee() : double
+}
+
+class RegularLaundry <<create this class>> {
+  + RegularLaundry(orderId : String, customer : Customer, weightKg : double)
+  + calculatePrice() : double
+}
+
+class ExpressLaundry <<create this class>> {
+  + ExpressLaundry(orderId : String, customer : Customer, weightKg : double)
+  + calculatePrice() : double
+  + deliveryFee() : double
+}
+
+class InvalidWeightException <<given>> {
+  + InvalidWeightException(message : String)
+}
+
+class OrderCalculator <<complete the methods>> {
+  + totalPrice(orders : List<LaundryOrder>) : double {static}
+  + totalDelivery(orders : List<LaundryOrder>) : double {static}
+  + validate(order : LaundryOrder) : void {static}
+  + isAcceptable(order : LaundryOrder) : boolean {static}
+}
+
+interface ReceiptPrinter <<given>> {
+  + print(orderId : String, amount : double) : void
+}
+
+class ConsoleReceiptPrinter <<given>> {
+  + print(orderId : String, amount : double) : void
+}
+
+class LaundryDesk <<complete the methods>> {
+  + LaundryDesk(printer : ReceiptPrinter)
+  + add(order : LaundryOrder) : void
+  + findById(orderId : String) : LaundryOrder
+  + count() : int
+  + getOrders() : List<LaundryOrder>
+  + checkout(orderId : String) : void
+}
+
+LaundryOrder <|-- RegularLaundry
+LaundryOrder <|-- ExpressLaundry
+Deliverable <|.. ExpressLaundry
+LaundryOrder --> "1" Customer : milik
+ReceiptPrinter <|.. ConsoleReceiptPrinter
+LaundryDesk --> "1" ReceiptPrinter : memakai interface
+LaundryDesk o-- "0..*" LaundryOrder : menyimpan
+OrderCalculator ..> LaundryOrder : memproses
+OrderCalculator ..> InvalidWeightException : throws
+InvalidWeightException -[hidden]- Deliverable
+@enduml

@@ -1,0 +1,248 @@
+name: Autograding Tests
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Customer Constructor and Getter Test
+        id: test-customer-constructor-getter
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Customer Constructor and Getter Test
+          command: mvn -q test -Dtest=CustomerConstructorGetterTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 5
+
+      - name: Customer Encapsulation Test
+        id: test-customer-encapsulation
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Customer Encapsulation Test
+          command: mvn -q test -Dtest=CustomerEncapsulationTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 10
+
+      - name: Subclass Structure Test
+        id: test-subclass-structure
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Subclass Structure Test
+          command: mvn -q test -Dtest=SubclassStructureTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 4
+
+      - name: RegularLaundry Price Test
+        id: test-regular-laundry-price
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: RegularLaundry Price Test
+          command: mvn -q test -Dtest=RegularLaundryPriceTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 4
+
+      - name: ExpressLaundry Price Test
+        id: test-express-laundry-price
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: ExpressLaundry Price Test
+          command: mvn -q test -Dtest=ExpressLaundryPriceTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 4
+
+      - name: Deliverable Interface Test
+        id: test-ability-interface
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Deliverable Interface Test
+          command: mvn -q test -Dtest=AbilityInterfaceTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 4
+
+      - name: Abstract Class and Interface Rules Test
+        id: test-abstract-and-interface-rules
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Abstract Class and Interface Rules Test
+          command: mvn -q test -Dtest=AbstractAndInterfaceRulesTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 4
+
+      - name: OrderCalculator Total Price (Polymorphism) Test
+        id: test-total-price
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: OrderCalculator Total Price (Polymorphism) Test
+          command: mvn -q test -Dtest=TotalPriceTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 5
+
+      - name: OrderCalculator Deliverable Total (instanceof) Test
+        id: test-total-ability
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: OrderCalculator Deliverable Total (instanceof) Test
+          command: mvn -q test -Dtest=TotalAbilityTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 5
+
+      - name: OrderCalculator Validate (Exception) Test
+        id: test-validate
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: OrderCalculator Validate (Exception) Test
+          command: mvn -q test -Dtest=ValidateTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 5
+
+      - name: OrderCalculator isAcceptable (try/catch) Test
+        id: test-is-acceptable
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: OrderCalculator isAcceptable (try/catch) Test
+          command: mvn -q test -Dtest=IsAcceptableTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 5
+
+      - name: LaundryDesk Add and Count Test
+        id: test-desk-add-count
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Add and Count Test
+          command: mvn -q test -Dtest=DeskAddCountTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: LaundryDesk Find By Id Test
+        id: test-desk-find-by-id
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Find By Id Test
+          command: mvn -q test -Dtest=DeskFindByIdTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: LaundryDesk Find Missing Returns Null Test
+        id: test-desk-find-missing
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Find Missing Returns Null Test
+          command: mvn -q test -Dtest=DeskFindMissingTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: LaundryDesk Keeps Insertion Order Test
+        id: test-desk-order
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Keeps Insertion Order Test
+          command: mvn -q test -Dtest=DeskOrderTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: LaundryDesk Uses List and Map Test
+        id: test-desk-collections
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Uses List and Map Test
+          command: mvn -q test -Dtest=DeskCollectionsTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: LaundryDesk Depends on ReceiptPrinter Interface Test (DIP)
+        id: test-desk-interface
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Depends on ReceiptPrinter Interface Test (DIP)
+          command: mvn -q test -Dtest=DeskInterfaceTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 5
+
+      - name: Checkout Uses Injected ReceiptPrinter Test (DIP)
+        id: test-checkout-uses-printer
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Checkout Uses Injected ReceiptPrinter Test (DIP)
+          command: mvn -q test -Dtest=CheckoutUsesPrinterTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 7
+
+      - name: LaundryDesk Prints Nothing Itself Test (SRP)
+        id: test-desk-prints-nothing
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: LaundryDesk Prints Nothing Itself Test (SRP)
+          command: mvn -q test -Dtest=DeskPrintsNothingTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 4
+
+      - name: New Subclass Needs No Change Test (OCP)
+        id: test-new-subclass-no-change
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: New Subclass Needs No Change Test (OCP)
+          command: mvn -q test -Dtest=NewSubclassNoChangeTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 8
+
+      - name: Any Subclass Substitutes Test (LSP)
+        id: test-substitution
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: Any Subclass Substitutes Test (LSP)
+          command: mvn -q test -Dtest=SubstitutionTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: No Concrete ReceiptPrinter Inside LaundryDesk Test (DIP)
+        id: test-no-concrete-printer
+        uses: classroom-resources/autograding-command-grader@v1
+        with:
+          test-name: No Concrete ReceiptPrinter Inside LaundryDesk Test (DIP)
+          command: mvn -q test -Dtest=NoConcretePrinterTest -DfailIfNoTests=true
+          timeout: 10
+          max-score: 3
+
+      - name: Autograding Reporter
+        uses: classroom-resources/autograding-grading-reporter@v1
+        env:
+          TEST-CUSTOMER-CONSTRUCTOR-GETTER_RESULTS: "${{ steps.test-customer-constructor-getter.outputs.result }}"
+          TEST-CUSTOMER-ENCAPSULATION_RESULTS: "${{ steps.test-customer-encapsulation.outputs.result }}"
+          TEST-SUBCLASS-STRUCTURE_RESULTS: "${{ steps.test-subclass-structure.outputs.result }}"
+          TEST-REGULAR-LAUNDRY-PRICE_RESULTS: "${{ steps.test-regular-laundry-price.outputs.result }}"
+          TEST-EXPRESS-LAUNDRY-PRICE_RESULTS: "${{ steps.test-express-laundry-price.outputs.result }}"
+          TEST-ABILITY-INTERFACE_RESULTS: "${{ steps.test-ability-interface.outputs.result }}"
+          TEST-ABSTRACT-AND-INTERFACE-RULES_RESULTS: "${{ steps.test-abstract-and-interface-rules.outputs.result }}"
+          TEST-TOTAL-PRICE_RESULTS: "${{ steps.test-total-price.outputs.result }}"
+          TEST-TOTAL-ABILITY_RESULTS: "${{ steps.test-total-ability.outputs.result }}"
+          TEST-VALIDATE_RESULTS: "${{ steps.test-validate.outputs.result }}"
+          TEST-IS-ACCEPTABLE_RESULTS: "${{ steps.test-is-acceptable.outputs.result }}"
+          TEST-DESK-ADD-COUNT_RESULTS: "${{ steps.test-desk-add-count.outputs.result }}"
+          TEST-DESK-FIND-BY-ID_RESULTS: "${{ steps.test-desk-find-by-id.outputs.result }}"
+          TEST-DESK-FIND-MISSING_RESULTS: "${{ steps.test-desk-find-missing.outputs.result }}"
+          TEST-DESK-ORDER_RESULTS: "${{ steps.test-desk-order.outputs.result }}"
+          TEST-DESK-COLLECTIONS_RESULTS: "${{ steps.test-desk-collections.outputs.result }}"
+          TEST-DESK-INTERFACE_RESULTS: "${{ steps.test-desk-interface.outputs.result }}"
+          TEST-CHECKOUT-USES-PRINTER_RESULTS: "${{ steps.test-checkout-uses-printer.outputs.result }}"
+          TEST-DESK-PRINTS-NOTHING_RESULTS: "${{ steps.test-desk-prints-nothing.outputs.result }}"
+          TEST-NEW-SUBCLASS-NO-CHANGE_RESULTS: "${{ steps.test-new-subclass-no-change.outputs.result }}"
+          TEST-SUBSTITUTION_RESULTS: "${{ steps.test-substitution.outputs.result }}"
+          TEST-NO-CONCRETE-PRINTER_RESULTS: "${{ steps.test-no-concrete-printer.outputs.result }}"
+        with:
+          runners: test-customer-constructor-getter,test-customer-encapsulation,test-subclass-structure,test-regular-laundry-price,test-express-laundry-price,test-ability-interface,test-abstract-and-interface-rules,test-total-price,test-total-ability,test-validate,test-is-acceptable,test-desk-add-count,test-desk-find-by-id,test-desk-find-missing,test-desk-order,test-desk-collections,test-desk-interface,test-checkout-uses-printer,test-desk-prints-nothing,test-new-subclass-no-change,test-substitution,test-no-concrete-printer

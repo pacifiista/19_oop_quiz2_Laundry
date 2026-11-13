@@ -1,0 +1,74 @@
+@startuml worked-example
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontSize 13
+skinparam class {
+  BorderColor Black
+  ArrowColor Black
+  BackgroundColor White
+  BackgroundColor<<given>> #E5E7EB
+  BackgroundColor<<complete the methods>> #FEF9C3
+  BackgroundColor<<create this class>> #DCFCE7
+}
+skinparam interface {
+  BorderColor Black
+  BackgroundColor<<given>> #E5E7EB
+}
+hide empty members
+
+title Contoh terpandu: toko hewan (bukan soalmu)
+
+class Owner <<complete the methods>> {
+  - ownerId : String
+  - name : String
+  + setName(name : String) : void
+}
+
+abstract class Pet <<given>> {
+  - petId : String
+  - ageMonths : double
+  + {abstract} calculateCare() : double
+}
+
+interface Vaccinatable <<given>> {
+  + vaccineFee() : double
+}
+
+class Cat <<create this class>> {
+  + calculateCare() : double
+}
+
+class Dog <<create this class>> {
+  + calculateCare() : double
+  + vaccineFee() : double
+}
+
+class InvalidAgeException <<given>>
+
+class CareCalculator <<complete the methods>> {
+  + totalCare(pets : List<Pet>) : double
+  + totalVaccine(pets : List<Pet>) : double
+  + validate(pet : Pet) : void
+  + isAcceptable(pet : Pet) : boolean
+}
+
+interface Receipt <<given>> {
+  + print(petId : String, amount : double) : void
+}
+
+class PetShop <<complete the methods>> {
+  + PetShop(receipt : Receipt)
+  + add(pet : Pet) : void
+  + findById(petId : String) : Pet
+  + checkout(petId : String) : void
+}
+
+Pet <|-- Cat
+Pet <|-- Dog
+Vaccinatable <|.. Dog
+Pet --> "1" Owner
+PetShop --> "1" Receipt
+PetShop o-- "0..*" Pet
+CareCalculator ..> Pet
+CareCalculator ..> InvalidAgeException : throws
+@enduml
