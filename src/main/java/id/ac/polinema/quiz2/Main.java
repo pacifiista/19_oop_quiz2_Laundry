@@ -21,6 +21,7 @@ public class Main {
         System.out.println("Laundry Kiloan: tulis percobaanmu di sini.");
 
         // 1. buat satu Customer, lalu coba ubah namanya
+        System.out.println("Simulasi perubahan nama customer: ");
         Customer cust = new Customer("C001", "Budi");
         System.out.println("Perubahan nama customer:" + cust.getName());
         cust.setName("Budi Santoso");
@@ -29,6 +30,7 @@ public class Main {
         // 2. buat satu RegularLaundry dan satu ExpressLaundry, dan tampilkan harganya
         // Parameter: (orderId, customer, weightKg)
         // Contoh berat 5 kg:
+        System.out.println("Simulasi harga pesanan Laundry: ");
         RegularLaundry reg = new RegularLaundry("L1", cust, 5.0);
         ExpressLaundry exp = new ExpressLaundry("L2", cust, 5.0);
 
@@ -37,6 +39,7 @@ public class Main {
         System.out.println("Biaya antar-jemput Express: Rp" + exp.deliveryFee() + "\n");
 
         //3. Masukkan keduanya ke OrderCalculator.totalPrice(...) lewat sebuah List.
+        System.out.println("Simulasi total harga dan biaya antar-jemput:");
         List<LaundryOrder> orders = new ArrayList<>();
         orders.add(reg);
         orders.add(exp);
@@ -49,7 +52,7 @@ public class Main {
 
 
         // 4. Buat LaundryDesk dengan new ConsoleReceiptPrinter(), tambahkan pesanan laundry, lalu panggil checkout(...).
-        System.out.println("Simulasi Checkout via LaundryDesk: ");
+        System.out.println("simulasikan checkout via LaundryDesk: ");
         LaundryDesk desk = new LaundryDesk(new ConsoleReceiptPrinter());
         desk.add(reg);
         desk.add(exp);
